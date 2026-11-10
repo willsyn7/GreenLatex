@@ -1,0 +1,10 @@
+name = "LaTeX"
+grammar = "latex"
+path_suffixes = ["tex", "latex", "sty", "cls"]
+line_comments = ["% "]
+tab_size = 2
+brackets = [
+  { start = "{", end = "}", close = true, newline = false, not_in = ["comment"] },
+  { start = "[", end = "]", close = true, newline = false, not_in = ["comment"] },
+]
+

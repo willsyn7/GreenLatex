@@ -1,0 +1,21 @@
+[package]
+name = "green-latex"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+zed_extension_api = "0.7.0"
+
+[profile.dev]
+# Windows Zed builds dev extensions through the WSL UNC share, which does not
+# support Rust's incremental session lock files.
+incremental = false
+
+[profile.release]
+lto = true
+strip = true
+

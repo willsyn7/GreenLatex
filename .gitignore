@@ -1,0 +1,17 @@
+/target/
+/grammars/
+/extension.wasm
+**/.greenlatex/
+__pycache__/
+*.pyc
+
+# Personal documents and local editor/account metadata.
+/BE/
+/.aws/
+/.codex/
+/.agents/
+.green-latex-staging.json
+*:Zone.Identifier
+.DS_Store
+Thumbs.db
+

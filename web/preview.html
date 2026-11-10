@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Green LaTeX · PDF preview</title>
+<style>
+  :root { color-scheme: dark; font: 14px system-ui, sans-serif; }
+  body { margin: 0; background: #171c20; color: #e4ece7; }
+  header { padding: 12px 20px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  strong { color: #91dfb1; } #status { flex: 1; } a { color: #91dfb1; }
+  iframe { width: 100%; height: calc(100vh - 100px); border: 0; background: #282b2d; }
+  details { padding: 8px 20px; } pre { white-space: pre-wrap; max-height: 30vh; overflow: auto; }
+  #empty { padding: 50px 20px; text-align: center; }
+</style>
+<header><strong>Green LaTeX</strong><span id="source"></span><span id="status" role="status">Connecting…</span><a id="pdf" target="_blank" rel="noopener" hidden>Open PDF</a></header>
+<details><summary>Build output</summary><pre id="log"></pre></details>
+<p id="empty">Your PDF will appear after the first successful build.</p>
+<iframe title="Compiled PDF preview" id="viewer" hidden></iframe>
+<script>
+  const base = location.pathname;
+  const viewer = document.querySelector('#viewer');
+  const status = document.querySelector('#status');
+  let revision = null;
+  async function poll() {
+    try {
+      const response = await fetch(base + 'status', {cache: 'no-store'});
+      if (!response.ok) throw new Error('Preview unavailable');
+      const state = await response.json();
+      document.querySelector('#source').textContent = state.source;
+      status.textContent = state.building ? 'Building…' : state.message;
+      status.style.color = state.building ? '#ebd38b' : state.ok === false ? '#ffaaaa' : '#91dfb1';
+      document.querySelector('#log').textContent = state.log;
+      if (state.revision && state.revision !== revision) {
+        revision = state.revision;
+        const url = base + 'document.pdf?v=' + revision;
+        viewer.src = url;
+        viewer.hidden = false;
+        document.querySelector('#empty').hidden = true;
+        const link = document.querySelector('#pdf');
+        link.href = url; link.hidden = false;
+      }
+    } catch (_) { status.textContent = 'Preview disconnected. Restart the preview task in Zed.'; }
+    setTimeout(poll, 750);
+  }
+  poll();
+</script>
+</html>

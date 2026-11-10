@@ -1,0 +1,7 @@
+{
+  "languages": {
+    "LaTeX": {
+      "language_servers": ["texlab"]
+    }
+  }
+}

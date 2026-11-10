@@ -1,0 +1,15 @@
+id = "green-latex"
+name = "Green LaTeX"
+description = "Local LaTeX editing, build-on-save, diagnostics, and companion live PDF preview."
+version = "0.1.0"
+schema_version = 1
+authors = ["GreenTool contributors"]
+
+[language_servers.texlab]
+name = "TexLab"
+languages = ["LaTeX"]
+
+[grammars.latex]
+repository = "https://github.com/497e0bdf29873/tree-sitter-latex"
+rev = "858af2c24547c8ab9386281ece6ead6936dbc8d1"
+
